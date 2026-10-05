@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f7f5ff" />
+    <meta
+      name="description"
+      content="Learn how MailSage accesses, processes, and stores Gmail data."
+    />
+    <title>Privacy — MailSage</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #242134;
+        --muted: #716d82;
+        --purple: #7459dc;
+        --purple-dark: #5a42bc;
+        --line: #e9e5f2;
+        --paper: #fff;
+        --wash: #f7f5ff;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--wash);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      a { color: inherit; }
+      .wrap { width: min(1000px, calc(100% - 48px)); margin: 0 auto; }
+      .topbar {
+        display: flex;
+        min-height: 78px;
+        align-items: center;
+        justify-content: space-between;
+        border-bottom: 1px solid #e9e5f27a;
+      }
+      .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); font-size: 21px; font-weight: 750; letter-spacing: -1px; text-decoration: none; }
+      .brand-mark { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 12px; background: linear-gradient(145deg, #987df4, var(--purple)); box-shadow: 0 5px 14px #7459dc33; }
+      .brand-mark svg { width: 21px; height: 21px; }
+      nav { display: flex; align-items: center; gap: 22px; }
+      nav a { color: var(--muted); font-size: 12px; text-decoration: none; }
+      nav a:hover { color: var(--purple-dark); }
+      .content { padding: 60px 0 80px; }
+      .eyebrow { color: var(--purple-dark); font-size: 10px; font-weight: 750; letter-spacing: 1.5px; text-transform: uppercase; }
+      h1 { margin: 12px 0 10px; font-size: clamp(38px, 6vw, 54px); letter-spacing: -3px; line-height: 1.08; }
+      .updated { color: var(--muted); font-size: 12px; }
+      .intro { max-width: 760px; margin: 21px 0 32px; color: #5f5b70; font-size: 15px; line-height: 1.8; }
+      .notice { padding: 17px 19px; margin-bottom: 27px; border: 1px solid #e5def7; border-radius: 13px; background: #f0edff; color: #51466f; font-size: 12px; line-height: 1.75; }
+      .notice strong { color: #3f355c; }
+      .policy { padding: 34px 40px; border: 1px solid var(--line); border-radius: 20px; background: var(--paper); box-shadow: 0 14px 45px #3525560b; }
+      .policy section + section { padding-top: 24px; margin-top: 24px; border-top: 1px solid #f0edf5; }
+      h2 { margin: 0 0 11px; font-size: 17px; letter-spacing: -.4px; }
+      p, li { color: #625e71; font-size: 12px; line-height: 1.8; }
+      p + p { margin-top: 10px; }
+      ul { display: grid; gap: 7px; padding-left: 20px; margin: 10px 0 0; }
+      li::marker { color: #9479dc; }
+      a.inline { color: var(--purple-dark); text-decoration: underline; text-underline-offset: 3px; }
+      .footer { padding: 24px 0 32px; border-top: 1px solid var(--line); color: #827d91; font-size: 10px; }
+      .footer-inner { display: flex; justify-content: space-between; gap: 15px; }
+      .footer a { color: #645a80; font-weight: 650; text-decoration: none; }
+      @media (max-width: 640px) {
+        .wrap { width: min(100% - 34px, 520px); }
+        .topbar { min-height: 67px; }
+        .brand { font-size: 18px; }
+        .brand-mark { width: 32px; height: 32px; }
+        nav { gap: 14px; }
+        nav a { font-size: 10px; }
+        .content { padding: 45px 0 55px; }
+        .policy { padding: 25px 21px; }
+        .footer-inner { flex-direction: column; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="wrap topbar">
+      <a class="brand" href="./index.html" aria-label="MailSage home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none">
+            <rect x="3.5" y="5.5" width="17" height="13" rx="3" stroke="white" stroke-width="1.7" />
+            <path d="m4.5 7 7.5 5.5L19.5 7" stroke="white" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </span>
+        MailSage
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="./index.html#features">Features</a>
+        <a href="./index.html#how-it-works">How it works</a>
+        <a href="./privacy.html" aria-current="page">Privacy</a>
+      </nav>
+    </header>
+
+    <main class="wrap content">
+      <span class="eyebrow">Your data, understood</span>
+      <h1>Privacy policy</h1>
+      <p class="updated">Last updated: October 5, 2026</p>
+      <p class="intro">
+        MailSage is a local email-analysis application. This policy describes
+        how the application accesses, processes, and stores information when
+        you connect a Gmail account and choose messages to analyze.
+      </p>
+      <div class="notice">
+        <strong>In brief:</strong> MailSage uses Google OAuth to access your
+        Gmail, stores fetched message data and its authorization token on the
+        device running the application, and uses a local AI model to analyze
+        messages you select. MailSage does not send email content to a hosted
+        AI service.
+      </div>
+
+      <article class="policy">
+        <section>
+          <h2>Information MailSage accesses</h2>
+          <p>
+            When you authorize Gmail access and fetch a date range, MailSage
+            retrieves messages in that range. Depending on the message, this
+            can include sender and recipient details, subject, date, labels,
+            snippet, and the text and HTML body. The application requests
+            Gmail's <code>gmail.modify</code> permission so it can remove the
+            <code>UNREAD</code> label when you open a message or successfully
+            generate its summary.
+          </p>
+          <p>
+            You choose which fetched messages to analyze. Their available
+            message content is passed to the local MailSage backend and
+            processed by the local Qwen model.
+          </p>
+        </section>
+
+        <section>
+          <h2>How information is used</h2>
+          <ul>
+            <li>To display Gmail messages that fall within the date range you select.</li>
+            <li>To generate summaries and identify useful details in the messages you choose, using a model running locally.</li>
+            <li>To update a message's read status in Gmail and in the local cache when you open it or its summary completes successfully.</li>
+          </ul>
+          <p>
+            Email content is not submitted to an external AI provider by
+            MailSage. Google processes OAuth authorization and Gmail API
+            requests under Google's own terms and privacy policy.
+          </p>
+        </section>
+
+        <section>
+          <h2>Where information is stored</h2>
+          <p>
+            The Gmail OAuth token is stored in the application's local
+            <code>.secrets/gmail-token.json</code> file. Fetched messages are
+            cached in the local SQLite database at
+            <code>.data/gmail-cache.sqlite3</code> and exported to
+            <code>emails.jsonl</code> in the project directory. These files
+            remain on the device where MailSage is running, subject to that
+            device's security, backups, and access controls.
+          </p>
+          <p>
+            MailSage does not provide cloud storage for this information. You
+            can remove local copies by deleting the relevant files after
+            closing the application. Revoking MailSage's Google access from
+            your Google Account removes future authorization; deleting a local
+            token alone does not delete copies of messages in the cache or
+            export.
+          </p>
+        </section>
+
+        <section>
+          <h2>Sharing and disclosure</h2>
+          <p>
+            MailSage does not sell personal information or share message
+            content with advertising or hosted AI services. Message data is
+            sent to Google when the application fetches messages or updates
+            their read status. Local files may also be accessible to people or
+            software that can access your device.
+          </p>
+        </section>
+
+        <section>
+          <h2>Security and permissions</h2>
+          <p>
+            MailSage runs its local API on the same device as the application.
+            Protect that device and its local files with appropriate account
+            and operating-system security. The Gmail permission is used for
+            fetching messages and marking selected messages as read; MailSage
+            does not use it to send email.
+          </p>
+          <p>
+            If you previously authorized MailSage with read-only access, Google
+            may ask you to grant consent again for the updated permission.
+          </p>
+        </section>
+
+        <section>
+          <h2>Children's privacy</h2>
+          <p>
+            MailSage is a general-purpose email utility and is not designed to
+            collect information directly from children.
+          </p>
+        </section>
+
+        <section>
+          <h2>Changes to this policy</h2>
+          <p>
+            This policy may be updated when MailSage's features or data
+            practices change. The date at the top of this page indicates the
+            most recent revision.
+          </p>
+        </section>
+
+        <section>
+          <h2>Contact</h2>
+          <p>
+            For questions about this policy or MailSage's handling of data,
+            contact the project maintainer through the channel where you
+            obtained the application.
+          </p>
+        </section>
+      </article>
+    </main>
+
+    <footer class="footer">
+      <div class="wrap footer-inner">
+        <span>© 2026 MailSage</span>
+        <a href="./index.html">Back to MailSage</a>
+      </div>
+    </footer>
+  </body>
+</html>
